@@ -108,6 +108,27 @@
 
   var database = firebase.database();
 
+  //initial values
+  var trainTime = 0;
+  var destination = "";
+  var firstTrain = 0;
+  var frequency = 0;
+
+  $("#addTrain").on("click", function(){
+    time = $("#trainTime").val().trim();
+    destination = $("#destination").val().trim();
+    firstTrain = $("#nextArrival").val().trim();
+    frequency = $("#frequency").val().trim();
+
+    database.ref().push({
+        time: time,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency
+    })
+    return false;
+  });
+
 </script>
 </body>
 </html>
