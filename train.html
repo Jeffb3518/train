@@ -136,6 +136,13 @@
     return false;
   });
 
+  database.ref().on("child_added", function (childSnapshot) {
+    console.log(childSnapshot.val().time);
+    console.log(childSnapshot.val().destination);
+    console.log(childSnapshot.val().firstTrain);
+    console.log(childSnapshot.val().frequency);
+  })
+
 </script>
 </body>
 </html>
