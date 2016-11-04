@@ -39,8 +39,8 @@
                     <h3 class="panel-title">Current Train Schdule</h3>
                 </div>
                 <div class="panel-body">
-                    <div id="full-member-list">
-                        <table>
+                    <div id="list"></div>
+                        <!-- <table>
                         <thead>
                             <tr>
                                 <th>Train Name</th>
@@ -59,7 +59,7 @@
                                 <td></td>
                             </tr>  
                         </tbody>
-                        </table>
+                        </table> -->
                     </div>
                 </div>
             </div>
@@ -78,19 +78,19 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="text">Train Time:</label>
-                            <input type="text" class="form-control" id="trainTime">
+                            <input type="text" class="form-control" id="timeInput">
                         </div>
                         <div class="form-group">
                             <label for="text">Destination:</label>
-                            <input type="email" class="form-control" id="destination">
+                            <input type="email" class="form-control" id="destinationInput">
                         </div>
                         <div class="form-group">
                             <label for="text">First Train Time:</label>
-                            <input type="number" class="form-control" id="nextArrival">
+                            <input type="number" class="form-control" id="arrivalInpunt">
                         </div>
                         <div class="form-group">
                             <label for="text">Frequency</label>
-                            <input type="number" class="form-control" id="frequency">
+                            <input type="number" class="form-control" id="frequencyInput">
                         </div>
                         <button type="button" class="btn btn-default" id="addTrain">Submit</button>
                     </form>
@@ -116,21 +116,21 @@
   var database = firebase.database();
 
   //initial values
-  var trainTime = 0;
+  var time = 0;
   var destination = "";
-  var firstTrain = 0;
+  var arrival = 0;
   var frequency = 0;
 
   $("#addTrain").on("click", function(){
-    time = $("#trainTime").val().trim();
-    destination = $("#destination").val().trim();
-    firstTrain = $("#nextArrival").val().trim();
-    frequency = $("#frequency").val().trim();
+    time = $("#timeInput").val().trim();
+    destination = $("#destinationInput").val().trim();
+    arrival = $("#arrivalInpunt").val().trim();
+    frequency = $("#frequencyInput").val().trim();
 
     database.ref().push({
         time: time,
         destination: destination,
-        firstTrain: firstTrain,
+        arrival: arrival,
         frequency: frequency
     })
     return false;
@@ -139,8 +139,17 @@
   database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().time);
     console.log(childSnapshot.val().destination);
-    console.log(childSnapshot.val().firstTrain);
+    console.log(childSnapshot.val().arrival);
     console.log(childSnapshot.val().frequency);
+
+    var html = "<div class='well'>";
+        html += "<span class='time'>Time: " + childSnapshot.val().name + "</span> ";
+        html += "<span class='destination'>Destination: " + childSnapshot.val().email + "</span> ";
+        html += "<span class='arrival'>Arrival: " + childSnapshot.val().age + "</span> ";
+        html += "<span class='frequency'>Frequency: " + childSnapshot.val().comment + "</span>";
+        html += "</div>";
+
+        $('#list').append(html);
   })
 
 </script>
