@@ -7,6 +7,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
     integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
     <!-- LINK TO FIREBASE GOES HERE -->
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
@@ -85,7 +86,6 @@
                         </div>
                         <button type="button" class="btn btn-default" id="addTrain">Submit</button>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -93,7 +93,20 @@
     </div>
 </div>
 
-<!-- Latest compiled and minified CSS & JS -->
-<script src="https://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
 
-<script>
+ // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBKfKXxnZvCqS2e0Au92EVlYfu8iae6nAM",
+    authDomain: "train-time-80488.firebaseapp.com",
+    databaseURL: "https://train-time-80488.firebaseio.com",
+    storageBucket: "train-time-80488.appspot.com",
+    messagingSenderId: "186434843376"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+</script>
+</body>
+</html>
