@@ -40,8 +40,8 @@
                 </div>
                 <div class="panel-body">
                     <div id="list"></div>
-                        <!-- <table>
-                        <thead>
+                        <table>
+                    
                             <tr>
                                 <th>Train Name</th>
                                 <th>Destination</th>
@@ -49,17 +49,8 @@
                                 <th>Next Arrival</th>
                                 <th>Minutes Away</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>  
-                        </tbody>
-                        </table> -->
+                        
+                        </table>
                     </div>
                 </div>
             </div>
@@ -82,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="text">Destination:</label>
-                            <input type="email" class="form-control" id="destinationInput">
+                            <input type="text" class="form-control" id="destinationInput">
                         </div>
                         <div class="form-group">
                             <label for="text">First Train Time:</label>
@@ -122,10 +113,8 @@
   var arrival = 0;
   var frequency = 0;
 
-  $("#addTrain").on('click', function(e) {
-        e.preventDefault();
-
-  // $("#addTrain").on("click", function(){
+  $("#addTrain").on('click', function() {
+       
     name = $("#nameInput").val().trim();
     destination = $("#destinationInput").val().trim();
     arrival = $("#arrivalInpunt").val().trim();
@@ -142,16 +131,62 @@
     return false;
   });
 
-  database.ref().on("child_added", function (childAdded) {
-    var name = childAdded.val().name;
-    var destination = childAdded.val().destination;
-    var arrival = childAdded.val().arrival;
-    var frequency = childAdded.val().frequency;
+  database.ref().on("child_added", function (childSnapshot) {
+        // Log everything that's coming out of snapshot
+        console.log(childSnapshot.val().name);
+        console.log(childSnapshot.val().destination);
+        console.log(childSnapshot.val().arrival);
+        console.log(childSnapshot.val().frequency);
+        // console.log(childSnapshot.val().dateAdded);
+
+  // database.ref().on("child_added", function (childAdded) {
+  //   var name = childAdded.val().name;
+  //   var destination = childAdded.val().destination;
+  //   var arrival = childAdded.val().arrival;
+  //   var frequency = childAdded.val().frequency;
 
     var timeConverted = moment(arrival, "HH:mm").subtract(1, "years");
+    console.log(timeConverted);
+
+    var time = moment ();
+    console.log("CURRENT TIME : " + moment(time).format("hh:mm"));
+
+    var diffTime = moment().diff(moment(
+            timeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    var tRemainder = diffTime % frequency;
+    console.log(tRemainder);
+
+    var tMinutesTillTrain = frequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm A"));
+    var nextTrainTime = moment(nextTrain).format("hh:mm A")
+
+    var html = "<div id='list'>";
+        html += "<span class='name'>Name: " + childSnapshot.val().name + "</span> ";
+        html += "<span class='destination'>Destination: " + childSnapshot.val().destination + "</span> ";
+        html += "<span class='arrival'>Arrival: " + childSnapshot.val().arrival + "</span> ";
+        html += "<span class='frequency'>Frequency: " + childSnapshot.val().frequency + "</span>";
+        html += "</div>";
+
+        $('#list').append(html);
 
    
-  })
+  }, function(errorObject){
+
+  });
+
+  // database.ref().orderByChild("dateAdded").limitToLast(1)
+  //           .on("child_added", function (snapshot) {
+  //       // Change the HTML to reflect
+  //       $("#nameInput").html(snapshot.val().name);
+  //       $("#destinationInput").html(snapshot.val().destination);
+  //       $("#arrivalInpunt").html(snapshot.val().arrival);
+  //       $("#frequencyInput").html(snapshot.val().frequency);
+  //   })
 
 </script>
 </body>
