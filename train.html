@@ -77,8 +77,8 @@
                     <!-- Add Trains (note the various input "types")-->
                     <form role="form">
                         <div class="form-group">
-                            <label for="text">Train Time:</label>
-                            <input type="text" class="form-control" id="timeInput">
+                            <label for="text">Train Name:</label>
+                            <input type="text" class="form-control" id="nameInput">
                         </div>
                         <div class="form-group">
                             <label for="text">Destination:</label>
@@ -101,6 +101,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 <script type="text/javascript">
 
  // Initialize Firebase
@@ -116,40 +117,40 @@
   var database = firebase.database();
 
   //initial values
-  var time = 0;
+  var name = 0;
   var destination = "";
   var arrival = 0;
   var frequency = 0;
 
-  $("#addTrain").on("click", function(){
-    time = $("#timeInput").val().trim();
+  $("#addTrain").on('click', function(e) {
+        e.preventDefault();
+
+  // $("#addTrain").on("click", function(){
+    name = $("#nameInput").val().trim();
     destination = $("#destinationInput").val().trim();
     arrival = $("#arrivalInpunt").val().trim();
-    frequency = $("#frequencyInput").val().trim();
+    frequency = parseInt($("#frequencyInput").val().trim());
+        console.log(arrivalInpunt);
 
     database.ref().push({
-        time: time,
+        name: name,
         destination: destination,
         arrival: arrival,
         frequency: frequency
+        // dateAdded: firebase.database.ServerValue.TIMESTAMP
     })
     return false;
   });
 
-  database.ref().on("child_added", function (childSnapshot) {
-    console.log(childSnapshot.val().time);
-    console.log(childSnapshot.val().destination);
-    console.log(childSnapshot.val().arrival);
-    console.log(childSnapshot.val().frequency);
+  database.ref().on("child_added", function (childAdded) {
+    var name = childAdded.val().name;
+    var destination = childAdded.val().destination;
+    var arrival = childAdded.val().arrival;
+    var frequency = childAdded.val().frequency;
 
-    var html = "<div class='well'>";
-        html += "<span class='time'>Time: " + childSnapshot.val().name + "</span> ";
-        html += "<span class='destination'>Destination: " + childSnapshot.val().email + "</span> ";
-        html += "<span class='arrival'>Arrival: " + childSnapshot.val().age + "</span> ";
-        html += "<span class='frequency'>Frequency: " + childSnapshot.val().comment + "</span>";
-        html += "</div>";
+    var timeConverted = moment(arrival, "HH:mm").subtract(1, "years");
 
-        $('#list').append(html);
+   
   })
 
 </script>
