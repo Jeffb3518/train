@@ -145,7 +145,10 @@
   //   var arrival = childAdded.val().arrival;
   //   var frequency = childAdded.val().frequency;
 
-    var timeConverted = moment(arrival, "HH:mm").subtract(1, "years");
+    var tFrequency = 3;
+    var firstTime = "03:00";
+
+    var timeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
     console.log(timeConverted);
 
     var time = moment ();
@@ -154,10 +157,10 @@
     var diffTime = moment().diff(moment(timeConverted), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
 
-    var tRemainder = diffTime % frequency;
+    var tRemainder = diffTime % tFrequency;
     console.log(tRemainder);
 
-    var tMinutesTillTrain = frequency - tRemainder;
+    var tMinutesTillTrain = tFrequency - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
