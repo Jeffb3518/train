@@ -65,7 +65,7 @@
                 </div>
                 <div class="panel-body">
 
-                    <!-- Add Trains (note the various input "types")-->
+                    <!-- Add Trains -->
                     <form role="form">
                         <div class="form-group">
                             <label for="text">Train Name:</label>
@@ -88,9 +88,9 @@
                 </div>
             </div>
         </div>
-        </div>
-    </div>
 </div>
+    
+
 
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 <script type="text/javascript">
@@ -151,8 +151,7 @@
     var time = moment ();
     console.log("CURRENT TIME : " + moment(time).format("hh:mm"));
 
-    var diffTime = moment().diff(moment(
-            timeConverted), "minutes");
+    var diffTime = moment().diff(moment(timeConverted), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
 
     var tRemainder = diffTime % frequency;
@@ -179,14 +178,14 @@
 
   });
 
-  // database.ref().orderByChild("dateAdded").limitToLast(1)
-  //           .on("child_added", function (snapshot) {
-  //       // Change the HTML to reflect
-  //       $("#nameInput").html(snapshot.val().name);
-  //       $("#destinationInput").html(snapshot.val().destination);
-  //       $("#arrivalInpunt").html(snapshot.val().arrival);
-  //       $("#frequencyInput").html(snapshot.val().frequency);
-  //   })
+  database.ref().orderByChild("dateAdded").limitToLast(1)
+            .on("child_added", function (snapshot) {
+        // Change the HTML to reflect
+        $("#nameInput").html(snapshot.val().name);
+        $("#destinationInput").html(snapshot.val().destination);
+        $("#arrivalInpunt").html(snapshot.val().arrival);
+        $("#frequencyInput").html(snapshot.val().frequency);
+    })
 
 </script>
 </body>
